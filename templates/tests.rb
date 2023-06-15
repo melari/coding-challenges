@@ -8,3 +8,5 @@ class MainTest < MiniTest::Test
   def test_foo
   end
 end
+
+# To run specific test: ruby tests.rb --name test_foo
