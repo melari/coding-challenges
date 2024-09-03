@@ -1,7 +1,7 @@
 require_relative 'main.rb'
 require 'minitest/autorun'
 
-class MainTest < MiniTest::Test
+class MainTest < Minitest::Test
   def setup
   end
 
