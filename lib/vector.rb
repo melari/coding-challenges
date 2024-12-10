@@ -9,6 +9,9 @@ class Vect2 < Vector
   def self.right; Vect2[1, 0]; end
   def self.left; Vect2[-1, 0]; end
 
+  def rotate_clockwise; Vect2[-y,x]; end
+  def rotate_counterclockwise; Vect[y,-x]; end
+
   def neighbours
     [self + Vect2.up, self + Vect2.down, self + Vect2.right, self + Vect2.left]
   end
