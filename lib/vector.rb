@@ -42,6 +42,8 @@ class Vect2 < Vector
     x >= minx && y >= miny && x <= maxx && y <= maxy
   end
 
+  # Allow for expanding x/y in blocks
+  # eg [...vectors...].each { |x, y| }
   def to_ary
     to_a
   end
