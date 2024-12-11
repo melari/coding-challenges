@@ -1,4 +1,4 @@
-require_relative '../../../lib/vector.rb'
+require_relative '../../../lib/grid.rb'
 
 def find_peaks_from(location, map)
   return [location] if map[location] == 9 # base case: we are already at the peak
@@ -8,8 +8,8 @@ def find_peaks_from(location, map)
     .compact
 end
 
-map = File.open('input.txt').map { |line| line.chomp.chars.map(&:to_i) }
-trailheads = map.each_with_index.flat_map { |row, y| row.each_with_index.map { |e, x| Vect2[x,y] if e == 0 } }.compact
+map = Grid.from_file('input.txt').map(&:to_i)
+trailheads = map.values_with_positions.select { |value, pos| value == 0 }.map(&:last)
 
 # part1
 puts trailheads.sum { |trailhead| find_peaks_from(trailhead, map).uniq.length }

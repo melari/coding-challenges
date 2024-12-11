@@ -1,19 +1,25 @@
 require 'matrix'
 
 class Vect2 < Vector
-  def x; self[0]; end
-  def y; self[1]; end
   def self.zero; super(2); end
   def self.up; Vect2[0, -1]; end
   def self.down; Vect2[0, 1]; end
   def self.right; Vect2[1, 0]; end
   def self.left; Vect2[-1, 0]; end
+  def self.upright; Vect2[1, -1]; end
+  def self.upleft; Vect2[-1, -1]; end
+  def self.downright; Vect2[1, 1]; end
+  def self.downleft; Vect2[-1, 1]; end
 
+  def x; self[0]; end
+  def y; self[1]; end
   def rotate_clockwise; Vect2[-y,x]; end
   def rotate_counterclockwise; Vect[y,-x]; end
 
-  def neighbours
-    [self + Vect2.up, self + Vect2.down, self + Vect2.right, self + Vect2.left]
+  def neighbours(include_diagonal: false)
+    n = [self + Vect2.up, self + Vect2.down, self + Vect2.right, self + Vect2.left]
+    n += [self + Vect2.upright, self + Vect2.upleft, self + Vect2.downright, self + Vect2.downleft] if include_diagonal
+    n
   end
 
   # bounded_neighbours(width, height)

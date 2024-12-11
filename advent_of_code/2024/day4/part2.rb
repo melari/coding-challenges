@@ -1,8 +1,13 @@
-grid = File.open('input.txt').map { |line| line.strip.chars }
-puts((1..grid.length-2).map do |y|
-  (1..grid[0].length-2).count do |x|
-    grid[y][x] == 'A' &&
-    [grid[y-1][x-1], grid[y+1][x+1]].sort == ['M', 'S'] &&
-    [grid[y-1][x+1], grid[y+1][x-1]].sort == ['M', 'S']
+require_relative '../../../lib/grid.rb'
+
+grid = Grid.from_file('input.txt')
+grid
+  .values_with_positions
+  .count do |value, pos|
+    pos.in_bounds?(minx: 1, miny: 1, maxx: grid.w-2, maxy: grid.h-2) &&
+      grid[pos] == 'A' &&
+      [grid[pos + Vect2.upleft], grid[pos + Vect2.downright]].sort == ['M', 'S'] &&
+      [grid[pos + Vect2.upright], grid[pos + Vect2.downleft]].sort == ['M', 'S']
   end
-end.sum)
+  .tap { |r| p(r) }
+
