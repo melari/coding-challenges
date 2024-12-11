@@ -57,27 +57,3 @@ class Vect2 < Vector
     to_a
   end
 end
-
-class Array
-  # Allow indexing into 2D arrays by a Vect2
-  # For example consider an nested array representing this grid of values:
-  # 1 2 3
-  # 4 5 6
-  # 7 8 9
-  # In array form this is [[1,2,3],[4,5,6],[7,8,9]]
-  #
-  # This patch allows indexing the array like this:
-  # pos = Vect2[2,1]
-  # val = map[pos]
-  # In which case, the returned val is 6
-  original = instance_method(:[])
-  define_method(:[]) do |first, *other|
-    return original.bind(self).(first, *other) unless other.length == 0 && first.is_a?(Vect2)
-    self[first.y][first.x]
-  end
-
-  # Vector of the width/height dimensions of this 2D array
-  def dim
-    Vect2[self[0]&.length || 0, length]
-  end
-end
