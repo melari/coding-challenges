@@ -80,4 +80,24 @@ class Grid
       rows.each_with_index { |row, y| row.each_with_index { |value, x| yielder << [value, Vect2[x,y]] } }
     end
   end
+
+  def neighbours(pos)
+    pos.bounded_neighbours(dim).map { |n| [ n, self[n] ] }
+  end
+
+  def inspect
+    gen_str(:inspect)
+  end
+
+  def to_s
+    gen_str(:to_s)
+  end
+
+  private
+
+  def gen_str(method)
+    "┌───[ Grid (#{w} x #{h}) ]\n" + rows.map do |row|
+      "│ " + row.map { |value| value.send(method) }.join(' ')
+    end.join("\n") + "\n└───"
+  end
 end

@@ -22,11 +22,12 @@ A simple (x,y) vector
 - `#rotate_clockwise`: the vector rotated 90 degrees clockwise
 - `#rotate_counterclockwise`: the vector rotated 90 degress counter-clockwise
 - `#neighbours(include_diagonal)`: list of vectors one unit away in each direction
-- `#bounded_neighbours(...)`: list of neighbours (see above), which meet the condition of being inside the given dimensions.
-    - `#bounded_neighbours(minx, miny, maxx, maxy)`: manually specify the bounds with numbers
-    - `#bounded_neighbours(width, height)`: minx & miny assumed to be (0, 0)
-    - `#bounded_neighbours(dimensions)`: where dimensions is a vect2 of width/height
-- `#in_bounds?(minx:, miny:, maxx:, maxy:):`: checks if this vector is within the given bounds
+- `#bounded_neighbours(...)`: list of neighbours (see above), which meet the condition of being inside the given dimensions. Valid args should match `in_bounds?`.
+- `#bounded_edges(...)`: list of neighbours, which do not meet the condition of being inside the given dimensions. (Opposite of `bounded_neighbours`)
+- `#in_bounds?(...):`: checks if this vector is within the given bounds
+    - `#in_bounds(minx:, miny:, maxx:, maxy:)`: manually specify the bounds with numbers
+    - `#in_bounds(width, height)`: minx & miny assumed to be (0, 0)
+    - `#in_bounds(dimensions)`: where dimensions is a vect2 of width/height
 
 ### other features
 
@@ -59,6 +60,7 @@ grid[Vect2[0, 0]] = 10
 - `#columns`: enumerator that yields each column in order
 - `#values`: enumerator that yields all values in the grid one by one, in reading order.
 - `#values_with_positions`: enumerator that yields each value with its (x,y) position
+- `#neighbours(pos)`: gives the neighbours of the given position. Each element of the returned array is a tuple of the form `[pos, value]`
 
 ```
 Vect2.new(...).values_with_positions.each { |value, (x, y)| ... }

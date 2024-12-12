@@ -22,9 +22,16 @@ class Vect2 < Vector
     n
   end
 
-  # bounded_neighbours(width, height)
-  # bounded_neighbours(minx:, miny:, maxx:, maxy:)
   def bounded_neighbours(*args)
+    neighbours.select { |n| n.in_bounds?(*args) }
+  end
+
+  def bounded_edges(*args)
+    rejects = bounded_neighbours(*args)
+    neighbours.reject { |n| rejects.include?(n) }
+  end
+
+  def in_bounds?(*args)
     if args.length == 1 && args[0].is_a?(Hash) # bounding box
       minx = args.dig(0, :minx)
       miny = args.dig(0, :miny)
@@ -44,10 +51,6 @@ class Vect2 < Vector
 
     raise ArgumentError.new('args should either be: (2D Array) OR (width, height) OR (minx:, miny:, maxx:, maxy:)') unless minx && miny && maxx && maxy
 
-    neighbours.select { |n| n.in_bounds?(minx: minx, miny: miny, maxx: maxx, maxy: maxy) }
-  end
-
-  def in_bounds?(minx:, miny:, maxx:, maxy:)
     x >= minx && y >= miny && x <= maxx && y <= maxy
   end
 
