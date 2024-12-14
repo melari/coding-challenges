@@ -19,6 +19,7 @@ A simple (x,y) vector
 
 - `#x`: the x component of the vector
 - `#y`: the y component of the vector
+- `#%(other)`: piece-wise modulus (ie x % other.x, y % other.y)
 - `#rotate_clockwise`: the vector rotated 90 degrees clockwise
 - `#rotate_counterclockwise`: the vector rotated 90 degress counter-clockwise
 - `#neighbours(include_diagonal)`: list of vectors one unit away in each direction

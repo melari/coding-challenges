@@ -16,6 +16,10 @@ class Vect2 < Vector
   def rotate_clockwise; Vect2[-y,x]; end
   def rotate_counterclockwise; Vect[y,-x]; end
 
+  def %(other)
+    Vect2[x % other.x, y % other.y]
+  end
+
   def neighbours(include_diagonal: false)
     n = [self + Vect2.up, self + Vect2.down, self + Vect2.right, self + Vect2.left]
     n += [self + Vect2.upright, self + Vect2.upleft, self + Vect2.downright, self + Vect2.downleft] if include_diagonal
