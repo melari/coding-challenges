@@ -26,9 +26,9 @@ A simple (x,y) vector
 - `#bounded_neighbours(...)`: list of neighbours (see above), which meet the condition of being inside the given dimensions. Valid args should match `in_bounds?`.
 - `#bounded_edges(...)`: list of neighbours, which do not meet the condition of being inside the given dimensions. (Opposite of `bounded_neighbours`)
 - `#in_bounds?(...):`: checks if this vector is within the given bounds
-    - `#in_bounds(minx:, miny:, maxx:, maxy:)`: manually specify the bounds with numbers
-    - `#in_bounds(width, height)`: minx & miny assumed to be (0, 0)
-    - `#in_bounds(dimensions)`: where dimensions is a vect2 of width/height
+    - `#in_bounds?(minx:, miny:, maxx:, maxy:)`: manually specify the bounds with numbers
+    - `#in_bounds?(width, height)`: minx & miny assumed to be (0, 0)
+    - `#in_bounds?(dimensions)`: where dimensions is a vect2 of width/height
 
 ### other features
 
