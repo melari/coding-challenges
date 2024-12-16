@@ -57,6 +57,7 @@ grid[Vect2[0, 0]] = 10
 - `#h`: height of the grid
 - `#dim`: width/height dimension of the grid as a Vect2
 - `#map { |value, position| }`: transforms a grid into another grid after transforming each value once
+- `#find_pos { |value| predicate }`: finds the first position that matches the predicate
 - `#rows`: enumerator that yields each row in order
 - `#columns`: enumerator that yields each column in order
 - `#values`: enumerator that yields all values in the grid one by one, in reading order.

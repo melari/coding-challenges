@@ -18,9 +18,16 @@ class Grid
 
   def map(&block)
     values_with_positions.each do |value, position|
-      self[position] = yield value
+      self[position] = yield value, position
     end
     self
+  end
+
+  def find_pos(&block)
+    values_with_positions.each do |value, position|
+      return position if yield value
+    end
+    return nil
   end
 
   def w
