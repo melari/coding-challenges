@@ -27,7 +27,12 @@ class Vect2 < Vector
   end
 
   def bounded_neighbours(*args)
-    neighbours.select { |n| n.in_bounds?(*args) }
+    include_diagonal = false
+    if args.length == 1 && args[0].is_a?(Hash) && !args[0][:include_diagonal].nil?
+      include_diagonal = args[0][:include_diagonal]
+      args = [args[0][:bounds]]
+    end
+    neighbours(include_diagonal: include_diagonal).select { |n| n.in_bounds?(*args) }
   end
 
   def bounded_edges(*args)
@@ -56,6 +61,10 @@ class Vect2 < Vector
     raise ArgumentError.new('args should either be: (2D Array) OR (width, height) OR (minx:, miny:, maxx:, maxy:)') unless minx && miny && maxx && maxy
 
     x >= minx && y >= miny && x <= maxx && y <= maxy
+  end
+
+  def manhattan(other)
+    (x - other.x).abs + (y - other.y).abs
   end
 
   # Allow for expanding x/y in blocks

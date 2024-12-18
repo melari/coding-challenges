@@ -24,6 +24,8 @@ A simple (x,y) vector
 - `#rotate_counterclockwise`: the vector rotated 90 degress counter-clockwise
 - `#neighbours(include_diagonal)`: list of vectors one unit away in each direction
 - `#bounded_neighbours(...)`: list of neighbours (see above), which meet the condition of being inside the given dimensions. Valid args should match `in_bounds?`.
+  - `#bounded_neighbours(bounds)`: list of non-diagonal neighbours where "bounds" matches arguments for `in_bounds?`.
+  - `#bounded_neighbours(include_diagonal: t/f, bounds: bounds)`
 - `#bounded_edges(...)`: list of neighbours, which do not meet the condition of being inside the given dimensions. (Opposite of `bounded_neighbours`)
 - `#in_bounds?(...):`: checks if this vector is within the given bounds
     - `#in_bounds?(minx:, miny:, maxx:, maxy:)`: manually specify the bounds with numbers
@@ -50,6 +52,7 @@ grid[Vect2[0, 0]] = 10
 
 - `::from_file(filepath, row_divider: "\n", column_divider: "")`: reads in the file and splits sections into a grid
 - `::from_str(string, row_divider: "\n", column_divider: "")`: parses a string and splits sections into a grid
+- `::init_by_position(dim:) { |x,y| value }`: creates a new grid of the given dimensions, initializing the value at each cell using the block.
 
 ### instance methods
 
@@ -62,8 +65,35 @@ grid[Vect2[0, 0]] = 10
 - `#columns`: enumerator that yields each column in order
 - `#values`: enumerator that yields all values in the grid one by one, in reading order.
 - `#values_with_positions`: enumerator that yields each value with its (x,y) position
-- `#neighbours(pos)`: gives the neighbours of the given position. Each element of the returned array is a tuple of the form `[pos, value]`
+- `#neighbours(pos, include_diagonal: false)`: gives the neighbours of the given position. Each element of the returned array is a tuple of the form `[pos, value]`
+- `#dup`: dups the grid itself but not the elements in the cells.
+- `#deep_dup`: dups the grid and calls `dup` on all elements.
 
 ```
 Vect2.new(...).values_with_positions.each { |value, (x, y)| ... }
 ```
+
+## PQ
+A priority queue with O(logn) write and O(1) read.
+The priority heuristic can be customized in a few ways:
+
+```
+PQ.increasing  # increasing order of the literal values
+PQ.increasing { |value| value.score } # increasing order by some other score function
+PQ.new(-> (a, b) { ... })   # fully customized heuristic
+```
+
+### class methods
+
+- `::increasing(&block)`: create a new PQ with an increasing heuristic
+- `::decreasing(&block)`: create a new PQ with a decreasing heuristic
+
+### instance methods
+
+- `#push(value)`: insert a value into the queue
+- `#<<(value)`: alias for `push`
+- `#pop`: remove and return the highest priority item
+- `#peek`: look at the highest priority item without removing it from the queue
+- `#length`: length of the queue
+- `#empty?`: true if the queue has no entries
+- `#any?`: true if the queue has at least one entry

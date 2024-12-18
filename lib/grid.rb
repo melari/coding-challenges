@@ -16,6 +16,13 @@ class Grid
       .yield_self { |val| Grid.new(val) }
   end
 
+  def self.init_by_position(dim:, &block)
+    grid = (0..(dim.y-1)).map do |y|
+      (0..(dim.x-1)).map { |x| yield Vect2[x,y] }
+    end
+    Grid.new(grid)
+  end
+
   def map(&block)
     values_with_positions.each do |value, position|
       self[position] = yield value, position
@@ -88,8 +95,8 @@ class Grid
     end
   end
 
-  def neighbours(pos)
-    pos.bounded_neighbours(dim).map { |n| [ n, self[n] ] }
+  def neighbours(pos, include_diagonal: false)
+    pos.bounded_neighbours(include_diagonal: include_diagonal, bounds: dim).map { |n| [ n, self[n] ] }
   end
 
   def inspect
@@ -98,6 +105,14 @@ class Grid
 
   def to_s
     gen_str(:to_s)
+  end
+
+  def dup
+    Grid.new(rows.map(&:dup))
+  end
+
+  def deep_dup
+    Grid.new(rows.map { |row| row.map(&:dup) })
   end
 
   private
