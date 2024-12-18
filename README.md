@@ -31,6 +31,7 @@ A simple (x,y) vector
     - `#in_bounds?(minx:, miny:, maxx:, maxy:)`: manually specify the bounds with numbers
     - `#in_bounds?(width, height)`: minx & miny assumed to be (0, 0)
     - `#in_bounds?(dimensions)`: where dimensions is a vect2 of width/height
+- `#manhatten(other)`: manhatten distance from this vector to the other.
 
 ### other features
 
