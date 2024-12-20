@@ -99,6 +99,23 @@ class Grid
     pos.bounded_neighbours(include_diagonal: include_diagonal, bounds: dim).map { |n| [ n, self[n] ] }
   end
 
+  def zone(pos, distance)
+    minx = [pos.x - distance, 0].max
+    miny = [pos.y - distance, 0].max
+    maxx = [pos.x + distance, w-1].min
+    maxy = [pos.y + distance, h-1].min
+
+    result = []
+    (miny..maxy).each do |y|
+      (minx..maxx).each do |x|
+        n = Vect2[x,y]
+        dist = n.manhattan(pos)
+        result << [n, self[n], dist] if dist <= distance
+      end
+    end
+    result
+  end
+
   def inspect
     gen_str(:inspect)
   end

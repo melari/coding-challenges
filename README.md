@@ -67,6 +67,7 @@ grid[Vect2[0, 0]] = 10
 - `#values`: enumerator that yields all values in the grid one by one, in reading order.
 - `#values_with_positions`: enumerator that yields each value with its (x,y) position
 - `#neighbours(pos, include_diagonal: false)`: gives the neighbours of the given position. Each element of the returned array is a tuple of the form `[pos, value]`
+- `#zone(pos, distance)`: gives a list of cells within a certain distance of a position. Each element of the returned array is a tuple of the form `[pos, value, distance]`, where distance is the manhattan distance from the zone's center.
 - `#dup`: dups the grid itself but not the elements in the cells.
 - `#deep_dup`: dups the grid and calls `dup` on all elements.
 
@@ -98,3 +99,4 @@ PQ.new(-> (a, b) { ... })   # fully customized heuristic
 - `#length`: length of the queue
 - `#empty?`: true if the queue has no entries
 - `#any?`: true if the queue has at least one entry
+- `#queue`: returns the raw queue as an array
