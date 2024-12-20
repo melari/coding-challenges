@@ -1,7 +1,7 @@
 require_relative '../../../lib/grid.rb'
 
 map = Grid.from_file('input.txt')
-@scores = Grid.init_by_position(dim: map.dim) { nil }
+@scores = map.dup.map { nil }
 
 scan = map.find_pos { |cell| cell == 'E' }
 @scores[scan] = 0
@@ -17,10 +17,9 @@ end
 
 def shortcuts(shortcut_time)
   @path.sum do |pos|
-    start_score = @scores[pos]
     @scores.zone(pos, shortcut_time).count do |_, n_score, n_dist|
       next false if n_score.nil?
-      start_score - n_score - n_dist >= 100
+      @scores[pos] - n_score - n_dist >= 100
     end
   end
 end
